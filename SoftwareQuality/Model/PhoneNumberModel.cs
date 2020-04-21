@@ -34,7 +34,7 @@
                 ISOCountryText.Equals(number.ISOCountryText) &&
                 AreaCode.Equals(number.AreaCode) &&
                 ParticipantNumber.Equals(number.ParticipantNumber) &&
-                Extension.Equals(number.Extension);
+                (Extension == null && number.Extension == null || Extension.Equals(number.Extension));
         }
     }
 }
