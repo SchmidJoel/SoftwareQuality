@@ -25,6 +25,17 @@ namespace SoftwareQuality
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(InputNumber)));
             } }
 
+        private string countryShort;
+        public string CountryShort
+        {
+            get => countryShort;
+            set
+            {
+                countryShort = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(CountryShort)));
+            }
+        }
+
         private int countryCode;
         public int CountryCode
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhoneNumbers;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -30,7 +31,15 @@ namespace SoftwareQuality
         private void ParsePhonenumber(object sender, RoutedEventArgs e)
         {
             var phoneNumber = DataContext as PhoneNumber;
-            
+
+            if (Validation.IsPhoneNumber(phoneNumber.InputNumber))
+            {
+                PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
+            }            
+            else
+            {
+                MessageBox.Show("Sie haben eine ungültige Nummer eingegeben! Bitte überprüfen Sie Ihre Eingaben", "Achtung");
+            }            
         }
     }
 
