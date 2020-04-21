@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joels\\source\\repos\\SoftwareQuality\\SoftwareQuality\\SoftwareQuality.csproj",
+      "projectUniqueName": "C:\\Users\\joels\\Programmieren\\C#\\SoftwareQuality\\SoftwareQuality\\SoftwareQuality.csproj",
       "projectName": "SoftwareQuality",
-      "projectPath": "C:\\Users\\joels\\source\\repos\\SoftwareQuality\\SoftwareQuality\\SoftwareQuality.csproj",
+      "projectPath": "C:\\Users\\joels\\Programmieren\\C#\\SoftwareQuality\\SoftwareQuality\\SoftwareQuality.csproj",
       "packagesPath": "C:\\Users\\joels\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joels\\source\\repos\\SoftwareQuality\\SoftwareQuality\\obj\\",
+      "outputPath": "C:\\Users\\joels\\Programmieren\\C#\\SoftwareQuality\\SoftwareQuality\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
