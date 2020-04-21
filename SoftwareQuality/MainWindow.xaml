@@ -6,12 +6,9 @@
         xmlns:local="clr-namespace:SoftwareQuality"
         mc:Ignorable="d"
         Title="Telefonnummern Parser" Height="300" Width="850">
-<<<<<<< HEAD
-=======
     <Window.Resources>
         <local:PhoneNumberVisibilityConverter x:Key="PhoneNumberVisibilityConverter"/>
     </Window.Resources>
->>>>>>> 80614def174e7ca5111e2a4ef96cdd3dc140051b
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

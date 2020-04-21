@@ -1,8 +1,5 @@
 ﻿using PhoneNumbers;
-<<<<<<< HEAD
 using SoftwareQuality.BusinessLogic;
-=======
->>>>>>> 80614def174e7ca5111e2a4ef96cdd3dc140051b
 using SoftwareQuality.Model;
 using SoftwareQuality.ViewModel;
 using System;
@@ -22,23 +19,6 @@ namespace SoftwareQuality
             InitializeComponent();
             DataContext = new MainViewModel();
         }
-<<<<<<< HEAD
-
-        private void ParsePhonenumber(object sender, RoutedEventArgs e)
-        {
-            var viewModel = DataContext as MainViewModel;
-
-            IPhoneNumberParser parser = new PhoneNumberParser();
-            PhoneNumberModel numberModel = new PhoneNumberModel();
-            bool isValidNumber = parser.ParsePhoneNumber(viewModel.InputNumber, out numberModel);
-
-            viewModel.CountryCode = numberModel.ISOCountryText;
-            viewModel.AreaCode = numberModel.AreaCode;
-            viewModel.MainCode = numberModel.ParticipantNumber;
-            viewModel.Extension = numberModel.Extension;
-        }
-=======
->>>>>>> 80614def174e7ca5111e2a4ef96cdd3dc140051b
     }
 
     public class PhoneNumberVisibilityConverter : IValueConverter

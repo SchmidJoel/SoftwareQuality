@@ -14,9 +14,9 @@ E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQua
 E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\obj\Debug\netcoreapp3.1\SoftwareQuality.AssemblyInfo.cs
 E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\obj\Debug\netcoreapp3.1\SoftwareQuality.dll
 E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\obj\Debug\netcoreapp3.1\SoftwareQuality.pdb
-E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
 E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\bin\Debug\netcoreapp3.1\CountryCode.json
 E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\bin\Debug\netcoreapp3.1\PhoneNumbers.dll
 E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\obj\Debug\netcoreapp3.1\SoftwareQuality.csproj.CopyComplete
 E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\obj\Debug\netcoreapp3.1\SoftwareQuality.csprojAssemblyReference.cache
+E:\Software Dev\Repositories\Studium\SoftwareQuality\SoftwareQuality\SoftwareQuality\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs

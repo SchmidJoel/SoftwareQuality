@@ -3,6 +3,7 @@ using SoftwareQuality.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SoftwareQuality.ViewModel
@@ -69,7 +70,14 @@ namespace SoftwareQuality.ViewModel
 
         private void ParsePhoneNumber(object obj)
         {
-            PhoneNumberModel = new PhoneNumberModel() {CountryCode = "+49"};//phoneNumberParser.ParsePhoneNumber(InputNumber);
+            IPhoneNumberParser parser = new PhoneNumberParser();
+            PhoneNumberModel numberModel = new PhoneNumberModel();
+            bool isValidNumber = parser.ParsePhoneNumber(InputNumber, out numberModel);
+
+            if (isValidNumber)
+                PhoneNumberModel = numberModel;
+            else
+                MessageBox.Show("You entered an invalid phone number!", "Invalid Number", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
     }
 
