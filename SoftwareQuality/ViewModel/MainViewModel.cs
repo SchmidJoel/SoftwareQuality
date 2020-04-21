@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace SoftwareQuality
+namespace SoftwareQuality.ViewModel
 {
-    class PhoneNumber : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
