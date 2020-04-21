@@ -28,22 +28,22 @@ namespace SoftwareQuality
         {
             var phoneNumber = DataContext as MainViewModel;
 
-            if (Validation.IsPhoneNumber(phoneNumber.InputNumber))
-            {
-                PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
-                var parsedNumber = phoneUtil.Parse(phoneNumber.InputNumber, "");
-                PhoneNumberParser parser = new PhoneNumberParser(phoneUtil.Format(parsedNumber, PhoneNumberFormat.INTERNATIONAL));
+            //if (Validation.IsPhoneNumber(phoneNumber.InputNumber))
+            //{
+            //    PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
+            //    var parsedNumber = phoneUtil.Parse(phoneNumber.InputNumber, "");
+            //    PhoneNumberParser parser = new PhoneNumberParser(phoneUtil.Format(parsedNumber, PhoneNumberFormat.INTERNATIONAL));
 
-                phoneNumber.CountryCode = parsedNumber.CountryCode.ToString();
-                phoneNumber.AreaCode = parser.LocalCode;
-                phoneNumber.MainCode = parser.ParticipantNumber;
-                phoneNumber.Extension = parser.Extension;
-                phoneNumber.CountryShort = Code.GetISOCode(parsedNumber.CountryCode.ToString());
-            }
-            else
-            {
-                MessageBox.Show("Sie haben eine ungültige Nummer eingegeben! Bitte überprüfen Sie Ihre Eingaben", "Achtung");
-            }            
+            //    phoneNumber.CountryCode = parsedNumber.CountryCode.ToString();
+            //    phoneNumber.AreaCode = parser.LocalCode;
+            //    phoneNumber.MainCode = parser.ParticipantNumber;
+            //    phoneNumber.Extension = parser.Extension;
+            //    phoneNumber.CountryShort = Code.GetISOCode(parsedNumber.CountryCode.ToString());
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Sie haben eine ungültige Nummer eingegeben! Bitte überprüfen Sie Ihre Eingaben", "Achtung");
+            //}            
         }
     }
 
