@@ -12,7 +12,7 @@ namespace SoftwareQuality.Test
         [TestInitialize]
         public void init()
         {
-            // TODO init phoneNumberParser
+            phoneNumberParser = new PhoneNumberParser();
         }
 
         [TestMethod]
@@ -23,15 +23,16 @@ namespace SoftwareQuality.Test
             {
                 AreaCode = "201",
                 CountryCode = "49",
-                Extension = "",
+                Extension = null,
                 ISOCountryText = "DE",
                 ParticipantNumber = "123456"
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("+49 0201 123456");
+            var success = phoneNumberParser.ParsePhoneNumber("+49 0201 123456", out var number);
 
             // Assert
+            Assert.IsTrue(success);
             Assert.AreEqual(model, number);
         }
 
@@ -43,35 +44,37 @@ namespace SoftwareQuality.Test
             {
                 AreaCode = "201",
                 CountryCode = "44",
-                Extension = "",
+                Extension = null,
                 ISOCountryText = "GB",
                 ParticipantNumber = "123456"
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("+44 0201123456");
+            var success = phoneNumberParser.ParsePhoneNumber("+44 0201123456", out var number);
 
             // Assert
-            Assert.AreEqual(model, number);
+            Assert.IsFalse(success);
+            Assert.IsNull(number);
         }
 
         [TestMethod]
-        public void Test_00330201123456()
+        public void Test_00490201123456()
         {
             // Arrange
             var model = new PhoneNumberModel
             {
                 AreaCode = "201",
-                CountryCode = "33",
-                Extension = "",
-                ISOCountryText = "FR",
+                CountryCode = "49",
+                Extension = null,
+                ISOCountryText = "DE",
                 ParticipantNumber = "123456"
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("0033 0201/123456");
+            var success = phoneNumberParser.ParsePhoneNumber("0049 0201/123456", out var number);
 
             // Assert
+            Assert.IsTrue(success);
             Assert.AreEqual(model, number);
         }
 
@@ -83,15 +86,16 @@ namespace SoftwareQuality.Test
             {
                 AreaCode = "201",
                 CountryCode = "49",
-                Extension = "",
+                Extension = null,
                 ISOCountryText = "DE",
                 ParticipantNumber = "123456"
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("0049201123456");
+            var success = phoneNumberParser.ParsePhoneNumber("0049201123456", out var number);
 
             // Assert
+            Assert.IsTrue(success);
             Assert.AreEqual(model, number);
         }
 
@@ -103,15 +107,16 @@ namespace SoftwareQuality.Test
             {
                 AreaCode = "201",
                 CountryCode = "49",
-                Extension = "",
+                Extension = null,
                 ISOCountryText = "DE",
                 ParticipantNumber = "123456"
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("(0)201 1234 56");
+            var success = phoneNumberParser.ParsePhoneNumber("(0)201 1234 56", out var number);
 
             // Assert
+            Assert.IsTrue(success);
             Assert.AreEqual(model, number);
         }
 
@@ -125,13 +130,14 @@ namespace SoftwareQuality.Test
                 CountryCode = "49",
                 Extension = "4780",
                 ISOCountryText = "DE",
-                ParticipantNumber = "760"
+                ParticipantNumber = "790"
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("+49 (941) 790-4780");
+            var success = phoneNumberParser.ParsePhoneNumber("+49 (941) 790-4780", out var number);
 
             // Assert
+            Assert.IsTrue(success);
             Assert.AreEqual(model, number);
         }
 
@@ -141,17 +147,18 @@ namespace SoftwareQuality.Test
             // Arrange
             var model = new PhoneNumberModel
             {
-                AreaCode = "151",
+                AreaCode = "1511",
                 CountryCode = "49",
-                Extension = "",
+                Extension = null,
                 ISOCountryText = "DE",
-                ParticipantNumber = "15011900"
+                ParticipantNumber = "5011900"
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("015115011900");
+            var success = phoneNumberParser.ParsePhoneNumber("015115011900", out var number);
 
             // Assert
+            Assert.IsTrue(success);
             Assert.AreEqual(model, number);
         }
 
@@ -163,15 +170,16 @@ namespace SoftwareQuality.Test
             {
                 AreaCode = "98709",
                 CountryCode = "91",
-                Extension = "",
+                Extension = null,
                 ISOCountryText = "IN",
                 ParticipantNumber = "87899"
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("+91 09870987 899");
+            var success = phoneNumberParser.ParsePhoneNumber("+91 09870987 899", out var number);
 
             // Assert
+            Assert.IsTrue(success);
             Assert.AreEqual(model, number);
         }
 
@@ -189,9 +197,10 @@ namespace SoftwareQuality.Test
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("[+49] (0)89-800/849-50");
+            var success = phoneNumberParser.ParsePhoneNumber("[+49] (0)89-800/849-50", out var number);
 
             // Assert
+            Assert.IsTrue(success);
             Assert.AreEqual(model, number);
         }
 
@@ -209,9 +218,10 @@ namespace SoftwareQuality.Test
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("+49 (8024) [990-477]");
+            var success = phoneNumberParser.ParsePhoneNumber("+49 (8024) [990-477]", out var number);
 
             // Assert
+            Assert.IsTrue(success);
             Assert.AreEqual(model, number);
         }
 
@@ -223,16 +233,17 @@ namespace SoftwareQuality.Test
             {
                 AreaCode = "62821855",
                 CountryCode = "1",
-                Extension = "",
+                Extension = null,
                 ISOCountryText = "US/CA",
                 ParticipantNumber = ""
             };
 
             // Act
-            var number = phoneNumberParser.ParsePhoneNumber("+1 628 21855");
+            var success = phoneNumberParser.ParsePhoneNumber("+1 628 21855", out var number);
 
             // Assert
-            Assert.AreEqual(model, number);
+            Assert.IsFalse(success);
+            Assert.IsNull(number);
         }
 
     }

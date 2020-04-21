@@ -83,6 +83,15 @@ namespace SoftwareQuality.ViewModel
         /// <param name="obj"></param>
         private void ParsePhoneNumber(object obj)
         {
+            IPhoneNumberParser parser = new PhoneNumberParser();
+            PhoneNumberModel numberModel = new PhoneNumberModel();
+            bool isValidNumber = parser.ParsePhoneNumber(InputNumber, out numberModel);
+
+            if (isValidNumber)
+                PhoneNumberModel = numberModel;
+            else
+                MessageBox.Show("You entered an invalid phone number!", "Invalid Number", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
             PhoneNumberModel model;
             var input = InputNumber;
             if(!(input.StartsWith("+") || input.StartsWith("00")))
