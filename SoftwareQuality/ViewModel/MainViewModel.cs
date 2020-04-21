@@ -68,6 +68,16 @@ namespace SoftwareQuality.ViewModel
 
         private void ParsePhoneNumber(object obj)
         {
+<<<<<<< HEAD
+            IPhoneNumberParser parser = new PhoneNumberParser();
+            PhoneNumberModel numberModel = new PhoneNumberModel();
+            bool isValidNumber = parser.ParsePhoneNumber(InputNumber, out numberModel);
+
+            if (isValidNumber)
+                PhoneNumberModel = numberModel;
+            else
+                MessageBox.Show("You entered an invalid phone number!", "Invalid Number", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+=======
             PhoneNumberModel model;
             var input = InputNumber;
             if(!(input.StartsWith("+") || input.StartsWith("00")))
@@ -83,6 +93,7 @@ namespace SoftwareQuality.ViewModel
             {
                 MessageBox.Show("Sie haben eine ungültige Nummer eingegeben! Bitte überprüfen Sie Ihre Eingaben", "Achtung");
             }
+>>>>>>> 9d9df937c9bff3fdf60caa1e841a115b412b3d2a
         }
     }
 
