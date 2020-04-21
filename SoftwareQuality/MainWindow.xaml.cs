@@ -22,9 +22,15 @@ namespace SoftwareQuality
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        CountryCode Code;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            Code = new CountryCode();
+
             DataContext = new PhoneNumber();
         }
 
@@ -35,7 +41,11 @@ namespace SoftwareQuality
             if (Validation.IsPhoneNumber(phoneNumber.InputNumber))
             {
                 PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
-            }            
+                var parsedNumber = phoneUtil.Parse(phoneNumber.InputNumber, "");
+                PhoneNumberParser parser = new PhoneNumberParser(phoneUtil.Format(parsedNumber, PhoneNumberFormat.INTERNATIONAL));
+
+                phoneNumber.CountryShort = Code.GetISOCode(parser.CountryCode);
+            }
             else
             {
                 MessageBox.Show("Sie haben eine ungültige Nummer eingegeben! Bitte überprüfen Sie Ihre Eingaben", "Achtung");
