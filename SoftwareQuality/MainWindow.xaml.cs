@@ -44,7 +44,11 @@ namespace SoftwareQuality
                 var parsedNumber = phoneUtil.Parse(phoneNumber.InputNumber, "");
                 PhoneNumberParser parser = new PhoneNumberParser(phoneUtil.Format(parsedNumber, PhoneNumberFormat.INTERNATIONAL));
 
-                phoneNumber.CountryShort = Code.GetISOCode(parser.CountryCode);
+                phoneNumber.CountryCode = parsedNumber.CountryCode.ToString();
+                phoneNumber.AreaCode = parser.LocalCode;
+                phoneNumber.MainCode = parser.ParticipantNumber;
+                phoneNumber.Extension = parser.Extension;
+                phoneNumber.CountryShort = Code.GetISOCode(parsedNumber.CountryCode.ToString());
             }
             else
             {

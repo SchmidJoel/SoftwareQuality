@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace SoftwareQuality
 {
@@ -36,8 +33,8 @@ namespace SoftwareQuality
             }
         }
 
-        private int countryCode;
-        public int CountryCode
+        private string countryCode;
+        public string CountryCode
         {
             get => countryCode;
             set
@@ -47,8 +44,8 @@ namespace SoftwareQuality
             }
         }
 
-        private int areaCode;
-        public int AreaCode
+        private string areaCode;
+        public string AreaCode
         {
             get => areaCode;
             set
@@ -58,8 +55,8 @@ namespace SoftwareQuality
             }
         }
 
-        private int mainCode;
-        public int MainCode
+        private string mainCode;
+        public string MainCode
         {
             get => mainCode;
             set
@@ -69,8 +66,8 @@ namespace SoftwareQuality
             }
         }
 
-        private int extension;
-        public int Extension
+        private string extension;
+        public string Extension
         {
             get => extension;
             set
