@@ -30,7 +30,16 @@ namespace SoftwareQuality
         private void ParsePhonenumber(object sender, RoutedEventArgs e)
         {
             var phoneNumber = DataContext as PhoneNumber;
-            //Todo parse the phonenumber
+            if (Validation.IsPhoneNumber(phoneNumber.InputNumber))
+            {
+                // Todo parse the phonenumber
+            }
+            else
+            {
+                MessageBox.Show("Sie haben eine ungültige Nummer eingegeben! Bitte überprüfen Sie Ihre Eingaben", "Achtung");
+            }
+
+            
         }
     }
 
