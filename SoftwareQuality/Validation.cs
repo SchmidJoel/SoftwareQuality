@@ -10,7 +10,7 @@ namespace SoftwareQuality
         public static bool IsPhoneNumber(string number)
         {
 
-            return Regex.Match(number, @"^\(?(\+|0)\(?[0-9]*\)?[ ()]?([- /()]?\d[- ()]?){1,15}$").Success;
+            return Regex.Match(number, @"^\(?(\+|0)\(?[0-9]{1,3}\)?[ ()]?([- /()]?\d[- ()]?){4,15}$").Success;
         }
     }
    
