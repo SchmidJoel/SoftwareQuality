@@ -1,4 +1,5 @@
-﻿using SoftwareQuality.Model;
+﻿using SoftwareQuality.BusinessLogic;
+using SoftwareQuality.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ namespace SoftwareQuality.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private IPhoneNumberParser phoneNumberParser;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -42,9 +44,22 @@ namespace SoftwareQuality.ViewModel
             }
         }
 
+
+        private string inputNumber;
+        public string InputNumber
+        {
+            get => inputNumber;
+            set
+            {
+                inputNumber = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(InputNumber)));
+            }
+        }
+
         public ObservableCollection<string> CountryCodes { get; } = new ObservableCollection<string>();
         public MainViewModel()
         {
+            //todo phoneNumberParser = ...;
             ParsePhoneNumberCommand = new RelayCommand(ParsePhoneNumber, o => true);
             CountryCodes.Add("DE");
             CountryCodes.Add("US");
@@ -54,8 +69,7 @@ namespace SoftwareQuality.ViewModel
 
         private void ParsePhoneNumber(object obj)
         {
-            var x = new PhoneNumberModel() { ISOCountryText = "DE", CountryCode = "+49", AreaCode = "1234", ParticipantNumber = "5678", Extension = "90" };
-            PhoneNumberModel = x;
+            PhoneNumberModel = new PhoneNumberModel() {CountryCode = "+49"};//phoneNumberParser.ParsePhoneNumber(InputNumber);
         }
     }
 
