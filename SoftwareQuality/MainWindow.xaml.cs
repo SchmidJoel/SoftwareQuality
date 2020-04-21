@@ -1,5 +1,8 @@
 ﻿using PhoneNumbers;
+<<<<<<< HEAD
 using SoftwareQuality.BusinessLogic;
+=======
+>>>>>>> 80614def174e7ca5111e2a4ef96cdd3dc140051b
 using SoftwareQuality.Model;
 using SoftwareQuality.ViewModel;
 using System;
@@ -14,17 +17,12 @@ namespace SoftwareQuality
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        CountryCode Code;
-
         public MainWindow()
         {
             InitializeComponent();
-
-            Code = new CountryCode();
-
             DataContext = new MainViewModel();
         }
+<<<<<<< HEAD
 
         private void ParsePhonenumber(object sender, RoutedEventArgs e)
         {
@@ -39,20 +37,24 @@ namespace SoftwareQuality
             viewModel.MainCode = numberModel.ParticipantNumber;
             viewModel.Extension = numberModel.Extension;
         }
+=======
+>>>>>>> 80614def174e7ca5111e2a4ef96cdd3dc140051b
     }
 
-    public class IntToString : IValueConverter
+    public class PhoneNumberVisibilityConverter : IValueConverter
     {
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value.ToString();
+            if(value is PhoneNumberModel && string.IsNullOrEmpty((value as PhoneNumberModel).Formatted.Trim()))
+            {
+                return Visibility.Collapsed;
+            }
+            return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int ret = 0;
-            return int.TryParse((string)value, out ret) ? ret : 0;
+            throw new NotImplementedException();
         }
     }
 }

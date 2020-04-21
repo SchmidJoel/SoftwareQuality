@@ -1,80 +1,103 @@
-﻿using System.ComponentModel;
+﻿using SoftwareQuality.BusinessLogic;
+using SoftwareQuality.Model;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace SoftwareQuality.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private IPhoneNumberParser phoneNumberParser;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if(e != null)
+            if (e != null)
             {
                 PropertyChanged(this, e);
             }
         }
 
+        public RelayCommand ParsePhoneNumberCommand { get; private set; }       
+
+        private PhoneNumberModel phoneNumberModel = new PhoneNumberModel();
+        public PhoneNumberModel PhoneNumberModel
+        {
+            get => phoneNumberModel;
+            set
+            {
+                phoneNumberModel = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(PhoneNumberModel)));
+            }
+        }
+
+        private string selectedCountryCode;
+        public string SelectedCountryCode
+        {
+            get => selectedCountryCode;
+            set
+            {
+                selectedCountryCode = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(SelectedCountryCode)));
+            }
+        }
+
+
         private string inputNumber;
-        public string InputNumber { 
-            get => inputNumber; 
-            set {
+        public string InputNumber
+        {
+            get => inputNumber;
+            set
+            {
                 inputNumber = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(InputNumber)));
-            } }
-
-        private string countryShort;
-        public string CountryShort
-        {
-            get => countryShort;
-            set
-            {
-                countryShort = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(CountryShort)));
             }
         }
 
-        private string countryCode;
-        public string CountryCode
+        public ObservableCollection<string> CountryCodes { get; } = new ObservableCollection<string>();
+        public MainViewModel()
         {
-            get => countryCode;
-            set
-            {
-                countryCode = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(CountryCode)));
-            }
+            //todo phoneNumberParser = ...;
+            ParsePhoneNumberCommand = new RelayCommand(ParsePhoneNumber, o => true);
+            CountryCodes.Add("DE");
+            CountryCodes.Add("US");
+            //todo fill CountryCode Liste
+            selectedCountryCode = CountryCodes[0];
         }
 
-        private string areaCode;
-        public string AreaCode
+        private void ParsePhoneNumber(object obj)
         {
-            get => areaCode;
-            set
-            {
-                areaCode = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(AreaCode)));
-            }
+            PhoneNumberModel = new PhoneNumberModel() {CountryCode = "+49"};//phoneNumberParser.ParsePhoneNumber(InputNumber);
+        }
+    }
+
+    public class RelayCommand : ICommand
+    {
+        private Action<object> execute;
+        private Func<object, bool> canExecute;
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
 
-        private string mainCode;
-        public string MainCode
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
-            get => mainCode;
-            set
-            {
-                mainCode = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(MainCode)));
-            }
+            this.execute = execute;
+            this.canExecute = canExecute;
         }
 
-        private string extension;
-        public string Extension
+        public bool CanExecute(object parameter)
         {
-            get => extension;
-            set
-            {
-                extension = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Extension)));
-            }
+            return this.canExecute == null || this.canExecute(parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            this.execute(parameter);
         }
     }
 }
