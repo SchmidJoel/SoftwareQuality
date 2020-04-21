@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Telefonnummern Parser" Height="300" Width="850">
     <Window.Resources>
-        <local:IntToString x:Key="converter"/>
+        <local:PhoneNumberVisibilityConverter x:Key="PhoneNumberVisibilityConverter"/>
     </Window.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
@@ -22,18 +22,36 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" >Eingabe der Telefonnummer:</Label>
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Label >Default:</Label>
+            <ComboBox IsEditable="True" ItemsSource="{Binding CountryCodes}" SelectedItem="{Binding SelectedCountryCode, Mode=TwoWay}"/>
+        </StackPanel>
+        
         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding InputNumber, Mode=TwoWay}" Margin="5"/>
-        <Button Grid.Row="0" Grid.Column="4" Click="ParsePhonenumber" Margin="5">Telefonnummer Parsen</Button>
-        <Label Grid.Row="1" Grid.Column="0" Margin="5">Länderkürzel:</Label>
-        <Label Grid.Row="1" Grid.Column="1" Margin="5">Ländervorwahl:</Label>
-        <Label Grid.Row="1" Grid.Column="2" Margin="5">Vorwahl:</Label>
-        <Label Grid.Row="1" Grid.Column="3" Margin="5">Hauptwahl:</Label>
-        <Label Grid.Row="1" Grid.Column="4" Margin="5">Durchwahl:</Label>
-        <Label Grid.Row="2" Grid.Column="0" Content="{Binding CountryShort}" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CountryCode}" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding AreaCode}" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding MainCode}" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Extension}" Margin="5"/>
+        <Button Grid.Row="0" Grid.Column="4" Command="{Binding ParsePhoneNumberCommand}" Margin="5">Telefonnummer Parsen</Button>
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
+            <Label >Länderkürzel:</Label>
+            <TextBox Text="{Binding PhoneNumberModel.ISOCountryText}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
+            <Label >Ländervorwahl:</Label>
+            <TextBox Text="{Binding PhoneNumberModel.CountryCode}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="5">
+            <Label >Vorwahl:</Label>
+            <TextBox Text="{Binding PhoneNumberModel.AreaCode}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="3" Margin="5">
+            <Label >Rufnummer:</Label>
+            <TextBox Text="{Binding PhoneNumberModel.ParticipantNumber}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="4" Margin="5">
+            <Label >Durchwahl:</Label>
+            <TextBox Text="{Binding PhoneNumberModel.Extension}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Visibility="{Binding PhoneNumberModel, Converter={StaticResource PhoneNumberVisibilityConverter}}">
+            <Label>Telefonnummer: </Label>
+            <Label Content="{Binding PhoneNumberModel.Formatted}"/>
+        </StackPanel>
     </Grid>
 </Window>

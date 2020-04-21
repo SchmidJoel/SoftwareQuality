@@ -1,15 +1,24 @@
-﻿namespace SoftwareQuality.Model
+﻿using System.ComponentModel;
+
+namespace SoftwareQuality.Model
 {
     public class PhoneNumberModel
     {
-        public string CountryCode;
+        public string CountryCode { get; set; }
 
-        public string ISOCountryText;
+        public string ISOCountryText { get; set; }
 
-        public string AreaCode;
+        public string AreaCode { get; set; }
 
-        public string ParticipantNumber;
+        public string ParticipantNumber { get; set; }
 
-        public string Extension;
+        public string Extension { get; set; }
+
+        public string Formatted { get => ToString(); }
+
+        public override string ToString()
+        {
+            return string.Format($"{CountryCode} {AreaCode} {ParticipantNumber} {Extension}");
+        }
     }
 }
