@@ -20,7 +20,11 @@
 
         public override string ToString()
         {
-            return string.Format($"{CountryCode} {AreaCode} {ParticipantNumber} {Extension}");
+            if (string.IsNullOrEmpty(CountryCode))
+            {
+                return string.Format($"{AreaCode} {ParticipantNumber} {Extension}");
+            }
+            return string.Format($"+{CountryCode} {AreaCode} {ParticipantNumber} {Extension}");
         }
 
         public override bool Equals(object obj)
