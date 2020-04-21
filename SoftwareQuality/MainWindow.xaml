@@ -6,9 +6,6 @@
         xmlns:local="clr-namespace:SoftwareQuality"
         mc:Ignorable="d"
         Title="Telefonnummern Parser" Height="300" Width="850">
-    <Window.Resources>
-        <local:IntToString x:Key="converter"/>
-    </Window.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

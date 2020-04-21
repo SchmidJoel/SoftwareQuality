@@ -1,4 +1,6 @@
 ﻿using PhoneNumbers;
+using SoftwareQuality.BusinessLogic;
+using SoftwareQuality.Model;
 using SoftwareQuality.ViewModel;
 using System;
 using System.Globalization;
@@ -26,24 +28,16 @@ namespace SoftwareQuality
 
         private void ParsePhonenumber(object sender, RoutedEventArgs e)
         {
-            var phoneNumber = DataContext as MainViewModel;
+            var viewModel = DataContext as MainViewModel;
 
-            if (Validation.IsPhoneNumber(phoneNumber.InputNumber))
-            {
-                PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
-                var parsedNumber = phoneUtil.Parse(phoneNumber.InputNumber, "DE");
-                PhoneNumberParser parser = new PhoneNumberParser(phoneUtil.Format(parsedNumber, PhoneNumberFormat.INTERNATIONAL));
+            IPhoneNumberParser parser = new PhoneNumberParser();
+            PhoneNumberModel numberModel = new PhoneNumberModel();
+            bool isValidNumber = parser.ParsePhoneNumber(viewModel.InputNumber, out numberModel);
 
-                phoneNumber.CountryCode = parsedNumber.CountryCode.ToString();
-                phoneNumber.AreaCode = parser.LocalCode;
-                phoneNumber.MainCode = parser.ParticipantNumber;
-                phoneNumber.Extension = parser.Extension;
-                phoneNumber.CountryShort = Code.GetISOCode(parsedNumber.CountryCode.ToString());
-            }
-            else
-            {
-                MessageBox.Show("Sie haben eine ungültige Nummer eingegeben! Bitte überprüfen Sie Ihre Eingaben", "Achtung");
-            }            
+            viewModel.CountryCode = numberModel.ISOCountryText;
+            viewModel.AreaCode = numberModel.AreaCode;
+            viewModel.MainCode = numberModel.ParticipantNumber;
+            viewModel.Extension = numberModel.Extension;
         }
     }
 

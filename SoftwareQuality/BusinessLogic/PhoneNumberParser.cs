@@ -1,82 +1,114 @@
-﻿using System;
+﻿using PhoneNumbers;
+using SoftwareQuality.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
-namespace SoftwareQuality
+namespace SoftwareQuality.BusinessLogic
 {
-    public class PhoneNumberParser
+    /// <summary>
+    /// Parses international phone numbers to a intermediate
+    /// representation
+    /// </summary>
+    public class PhoneNumberParser : IPhoneNumberParser
     {
-        #region Properties
+        private readonly PhoneNumberUtil phoneUtil;
+        private const int numberOfPartialCodes = 3;
 
-        public string CountryCode
+        public PhoneNumberParser()
         {
-            get
-            {
-                if (partialCodes[0] == null)
-                    Parse();
-                return partialCodes[0];
-            }
+            phoneUtil = PhoneNumberUtil.GetInstance();
         }
 
-        public string LocalCode
+        /// <summary>
+        /// Parses a phone number into an intermediate representation in order
+        /// to retrieve its country code, area code, participant number and 
+        /// extension
+        /// </summary>
+        /// <param name="input">Phone number to be parsed</param>
+        /// <param name="parsedNumber">Intermediate representation of partial phone number codes</param>
+        /// <returns>Returns a boolean value indicating if the input string is a valid phone number</returns>
+        public bool ParsePhoneNumber(string input, out PhoneNumberModel parsedNumber)
         {
-            get
+            PhoneNumberModel number = new PhoneNumberModel();
+            if (input.StartsWith("00"))
+                input = "+" + input.Remove(0, 2);
+
+            input = Regex.Replace(input, @"[()\[\]/]", "");
+
+            List<string> parts = input.Split('-').ToList();
+            if (parts.Count > 1)
             {
-                if (partialCodes[1] == null)
-                    Parse();
-                return partialCodes[1];
+                number.Extension = parts.Last();
+                parts.RemoveAt(parts.Count - 1);
+                input = string.Join("", parts);
             }
+
+            PhoneNumber numberRepresentation = GetPhoneNumberRepresentation(input);
+            if (phoneUtil.IsValidNumber(numberRepresentation))
+            {
+                GetPartialCodes(ref number, numberRepresentation);
+                parsedNumber = number;
+                return true;
+            }
+            else
+            {
+                parsedNumber = null;
+                return false;
+            }
+
         }
 
-        public string ParticipantNumber
+        /// <summary>
+        /// Transforms a given string into a google phone number
+        /// representation to be used by Google libphonenumber library
+        /// </summary>
+        /// <param name="number">Phone number to be transformed</param>
+        /// <returns>Google phone number repesentation used by 
+        /// libphonenumber library</returns>
+        private PhoneNumber GetPhoneNumberRepresentation(string number)
         {
-            get
+            PhoneNumber parsed;
+            try
             {
-                if (partialCodes[2] == null)
-                    Parse();
-                return partialCodes[2];
+                parsed = phoneUtil.Parse(number, "DE");
             }
+            catch (NumberParseException)         //Phone number is not valid
+            {
+                return null;
+            }
+
+            return parsed; ;
         }
 
-        public string Extension
+
+        /// <summary>
+        /// Extracts the partial codes of the phone number
+        /// </summary>
+        /// <param name="numberModel">Google phone number representation to extract codes from</param>
+        /// <param name="numberRepresentation">Intermediate representation containing the partial codes</param>
+        private void GetPartialCodes(ref PhoneNumberModel numberModel, PhoneNumber numberRepresentation)
         {
-            get
-            {
-                if (partialCodes[3] == null)
-                    Parse();
-                return partialCodes[3];
-            }
-        }
+            /*Format phonenumber to international representation*/
+            string internationalRep = phoneUtil.Format(numberRepresentation, PhoneNumberFormat.INTERNATIONAL);
 
-        #endregion Properties
+            /*Parse out partial codes*/
+            string[] parts = internationalRep.Split(new char[0]);           //split by whitespaces which represent the borders of partial codes within the international representation
 
-        private string phonenumber;
-        private string[] partialCodes;
+            /*Initialize empty string for country code, local code and participant number*/
+            string[] partialCodes = new string[numberOfPartialCodes];
+            Array.Fill(partialCodes, string.Empty);
+            parts.Take(numberOfPartialCodes).ToArray().CopyTo(partialCodes, 0);
 
-        public PhoneNumberParser(string phonenumber)
-        {
-            this.phonenumber = phonenumber;
-            this.partialCodes = new string[4];
-        }
+            /*Extract partial codes from result array*/
+            numberModel.CountryCode = partialCodes[0].Remove(partialCodes[0].IndexOf('+'), 1);              //Remove country code prefix(+)
+            numberModel.AreaCode = partialCodes[1];
+            numberModel.ParticipantNumber = partialCodes[2];
 
-        private void Parse()
-        {
-            /*Initialize empty string for country code, local code, participant number and extension*/
-            Array.Fill<string>(partialCodes, String.Empty);
-
-            string t = partialCodes[0];
-
-            phonenumber.Trim('+');                                   //Remove country code prefix
-            if (phonenumber.StartsWith('0'))
-                phonenumber.Remove(0, 1);                           //Remove Leading '0'
-
-            string[] parts = phonenumber.Split(new char[0]);        //split by whitespaces
-
-            for (int i = 0; i < parts.Length; i++)
-            {
-                partialCodes[i] = parts[i];
-
-                if (i >= partialCodes.Length-1)
-                    break;
-            }
+            /*Select ISO textual country representation corresponding the numeric country code*/
+            CountryCode codePicker = new CountryCode();
+            numberModel.ISOCountryText = codePicker.GetISOCode(numberModel.CountryCode);
         }
     }
 }
