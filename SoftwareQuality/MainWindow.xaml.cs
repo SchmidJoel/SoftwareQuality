@@ -23,9 +23,17 @@ namespace SoftwareQuality
 
     public class PhoneNumberVisibilityConverter : IValueConverter
     {
+        /// <summary>
+        /// Converter zum Anzeigen/Verstecken eines PhoneNumberModels
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is PhoneNumberModel && string.IsNullOrEmpty((value as PhoneNumberModel).Formatted.Trim()))
+            if(value != null && value is PhoneNumberModel && string.IsNullOrEmpty((value as PhoneNumberModel).Formatted.Trim()))
             {
                 return Visibility.Collapsed;
             }

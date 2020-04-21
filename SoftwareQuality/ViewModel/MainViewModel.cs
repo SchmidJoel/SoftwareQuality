@@ -24,6 +24,9 @@ namespace SoftwareQuality.ViewModel
 
         public RelayCommand ParsePhoneNumberCommand { get; private set; }       
 
+        /// <summary>
+        /// Ergebnis einer geparsten Telefonnummer
+        /// </summary>
         private PhoneNumberModel phoneNumberModel = new PhoneNumberModel();
         public PhoneNumberModel PhoneNumberModel
         {
@@ -35,6 +38,9 @@ namespace SoftwareQuality.ViewModel
             }
         }
 
+        /// <summary>
+        /// Ausgewähltes Standardland
+        /// </summary>
         private string selectedCountryCode;
         public string SelectedCountryCode
         {
@@ -46,7 +52,9 @@ namespace SoftwareQuality.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Eingegebene Nummer
+        /// </summary>
         private string inputNumber;
         public string InputNumber
         {
@@ -58,6 +66,9 @@ namespace SoftwareQuality.ViewModel
             }
         }
 
+        /// <summary>
+        /// Mögliche CountryCodes zur Anzeige für Defaultland
+        /// </summary>
         public ObservableCollection<string> CountryCodes { get; } = new ObservableCollection<string>();
         public MainViewModel()
         {
@@ -66,6 +77,10 @@ namespace SoftwareQuality.ViewModel
             selectedCountryCode = "DE";
         }
 
+        /// <summary>
+        /// Validieren, Parsen der eingegebenen Telefonnummer
+        /// </summary>
+        /// <param name="obj"></param>
         private void ParsePhoneNumber(object obj)
         {
             PhoneNumberModel model;
