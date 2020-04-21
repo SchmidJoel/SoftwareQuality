@@ -31,9 +31,9 @@
         <Label Grid.Row="1" Grid.Column="3" Margin="5">Hauptwahl:</Label>
         <Label Grid.Row="1" Grid.Column="4" Margin="5">Durchwahl:</Label>
         <Label Grid.Row="2" Grid.Column="0" Content="{Binding CountryShort}" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CountryCode, Converter={StaticResource converter}}" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding AreaCode, Converter={StaticResource converter}}" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding MainCode, Converter={StaticResource converter}}" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Extension, Converter={StaticResource converter}}" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CountryCode}" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding AreaCode}" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding MainCode}" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding Extension}" Margin="5"/>
     </Grid>
 </Window>
