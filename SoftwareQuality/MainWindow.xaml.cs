@@ -30,7 +30,7 @@ namespace SoftwareQuality
         private void ParsePhonenumber(object sender, RoutedEventArgs e)
         {
             var phoneNumber = DataContext as PhoneNumber;
-            //Todo parse the phonenumber
+            
         }
     }
 
