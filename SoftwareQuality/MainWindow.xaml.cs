@@ -41,7 +41,7 @@ namespace SoftwareQuality
             if (Validation.IsPhoneNumber(phoneNumber.InputNumber))
             {
                 PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
-                var parsedNumber = phoneUtil.Parse(phoneNumber.InputNumber, "");
+                var parsedNumber = phoneUtil.Parse(phoneNumber.InputNumber, "DE");
                 PhoneNumberParser parser = new PhoneNumberParser(phoneUtil.Format(parsedNumber, PhoneNumberFormat.INTERNATIONAL));
 
                 phoneNumber.CountryShort = Code.GetISOCode(parser.CountryCode);
