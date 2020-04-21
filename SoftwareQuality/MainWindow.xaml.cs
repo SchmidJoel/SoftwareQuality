@@ -21,9 +21,15 @@ namespace SoftwareQuality
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        CountryCode Code;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            Code = new CountryCode();
+
             DataContext = new PhoneNumber();
         }
 
@@ -32,6 +38,7 @@ namespace SoftwareQuality
             var phoneNumber = DataContext as PhoneNumber;
             if (Validation.IsPhoneNumber(phoneNumber.InputNumber))
             {
+                //phoneNumber.CountryShort = Code.GetISOCode(phoneNumber.CountryCode.ToString());
                 // Todo parse the phonenumber
             }
             else
