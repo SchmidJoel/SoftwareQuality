@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SoftwareQuality
 {
@@ -24,6 +25,23 @@ namespace SoftwareQuality
             {
                 return string.Empty;
             }
+        }
+
+        public string GetCountryCode(string isoCode)
+        {
+            if (_Codes.Values.Contains(isoCode))
+            {
+                return _Codes.First(kv => kv.Value.Equals(isoCode)).Key;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        public List<string> GetCountryCodes()
+        {
+            return _Codes.Values.OrderBy(v => v).ToList(); ;
         }
     }
 }

@@ -10,7 +10,8 @@ namespace SoftwareQuality.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private IPhoneNumberParser phoneNumberParser;
+        private IPhoneNumberParser phoneNumberParser = new PhoneNumberParser();
+        private CountryCode codes = new CountryCode();
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -60,16 +61,14 @@ namespace SoftwareQuality.ViewModel
         public ObservableCollection<string> CountryCodes { get; } = new ObservableCollection<string>();
         public MainViewModel()
         {
-            //todo phoneNumberParser = ...;
             ParsePhoneNumberCommand = new RelayCommand(ParsePhoneNumber, o => true);
-            CountryCodes.Add("DE");
-            CountryCodes.Add("US");
-            //todo fill CountryCode Liste
-            selectedCountryCode = CountryCodes[0];
+            codes.GetCountryCodes().ForEach(c => CountryCodes.Add(c));
+            selectedCountryCode = "DE";
         }
 
         private void ParsePhoneNumber(object obj)
         {
+<<<<<<< HEAD
             IPhoneNumberParser parser = new PhoneNumberParser();
             PhoneNumberModel numberModel = new PhoneNumberModel();
             bool isValidNumber = parser.ParsePhoneNumber(InputNumber, out numberModel);
@@ -78,6 +77,23 @@ namespace SoftwareQuality.ViewModel
                 PhoneNumberModel = numberModel;
             else
                 MessageBox.Show("You entered an invalid phone number!", "Invalid Number", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+=======
+            PhoneNumberModel model;
+            var input = InputNumber;
+            if(!(input.StartsWith("+") || input.StartsWith("00")))
+            {
+                input = string.Format($"+{codes.GetCountryCode(SelectedCountryCode)}{input}");
+            }
+            if(phoneNumberParser.ParsePhoneNumber(input, out model))
+            {
+                PhoneNumberModel = model;
+                InputNumber = input;
+            }
+            else
+            {
+                MessageBox.Show("Sie haben eine ungültige Nummer eingegeben! Bitte überprüfen Sie Ihre Eingaben", "Achtung");
+            }
+>>>>>>> 9d9df937c9bff3fdf60caa1e841a115b412b3d2a
         }
     }
 
