@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SoftwareQuality.BusinessLogic;
 using SoftwareQuality.Model;
+using System;
 
 namespace SoftwareQuality.Test
 {
@@ -37,7 +38,7 @@ namespace SoftwareQuality.Test
         }
 
         [TestMethod]
-        public void Test_plus440201123456()
+        public void Test_Fail_plus440201123456()
         {
             // Arrange
             var model = new PhoneNumberModel
@@ -226,7 +227,7 @@ namespace SoftwareQuality.Test
         }
 
         [TestMethod]
-        public void Test_pus162821855()
+        public void Test_Fail_pus162821855()
         {
             // Arrange
             var model = new PhoneNumberModel
@@ -244,6 +245,60 @@ namespace SoftwareQuality.Test
             // Assert
             Assert.IsFalse(success);
             Assert.IsNull(number);
+        }
+
+        [TestMethod]
+        public void Test_Fail_tolong()
+        {
+            // Arrange
+
+            // Act
+            Assert.ThrowsException<NullReferenceException>(() => phoneNumberParser.ParsePhoneNumber("12345678901234567890", out var number));
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void Test_Fail_ungueltigeZeichen()
+        {
+            // Arrange
+
+            // Act
+            Assert.ThrowsException<NullReferenceException>(() => phoneNumberParser.ParsePhoneNumber("ungültige Zeichen", out var number));
+            
+            // Assert
+        }
+
+        [TestMethod]
+        public void Test_Fail_ungueltigeZeichen2()
+        {
+            // Arrange
+
+            // Act
+            Assert.ThrowsException<NullReferenceException>(() => phoneNumberParser.ParsePhoneNumber("+49fhdsj76432fhs387", out var number));
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void Test_gueltigeZeichen()
+        {
+            // Arrange
+            var model = new PhoneNumberModel
+            {
+                AreaCode = "7643",
+                CountryCode = "49",
+                Extension = null,
+                ISOCountryText = "DE",
+                ParticipantNumber = "2387"
+            };
+
+            // Act
+            var success = phoneNumberParser.ParsePhoneNumber("fhdsj7643ab2387", out var number);
+
+            // Assert
+            Assert.IsTrue(success);
+            Assert.AreEqual(model, number);
         }
 
     }

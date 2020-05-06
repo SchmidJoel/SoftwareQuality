@@ -79,7 +79,7 @@ namespace SoftwareQuality.BusinessLogic
                 return null;
             }
 
-            return parsed; ;
+            return parsed;
         }
 
 
